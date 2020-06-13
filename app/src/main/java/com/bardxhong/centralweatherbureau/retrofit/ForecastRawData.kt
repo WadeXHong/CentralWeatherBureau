@@ -29,26 +29,26 @@ data class Location(
     @SerializedName("locationName")
     val locationName: String,
     @SerializedName("weatherElement")
-    val weatherElement: List<WeatherElement>
+    val weatherElementList: List<WeatherElement>
 )
 
 data class WeatherElement(
     @SerializedName("elementName")
     val elementName: String,
     @SerializedName("time")
-    val time: List<Time>
+    val intervalDataList: List<IntervalData>
 )
 
-data class Time(
+data class IntervalData(
     @SerializedName("endTime")
     val endTime: String,
     @SerializedName("parameter")
-    val parameter: Parameter,
+    val detail: Detail,
     @SerializedName("startTime")
     val startTime: String
 )
 
-data class Parameter(
+data class Detail(
     @SerializedName("parameterName")
     val parameterName: String,
     @SerializedName("parameterUnit")

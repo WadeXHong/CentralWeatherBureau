@@ -1,6 +1,7 @@
 package com.bardxhong.centralweatherbureau.data
 
-import com.bardxhong.centralweatherbureau.data.IItem
+import com.bardxhong.centralweatherbureau.retrofit.IntervalData
 
-data class ForecastItem(private val nonsence: Any = Any()):
-    IItem
+data class ForecastItem(val data: IntervalData) : IItem
+
+data class ImageItem(private val data: IntervalData) : IItem

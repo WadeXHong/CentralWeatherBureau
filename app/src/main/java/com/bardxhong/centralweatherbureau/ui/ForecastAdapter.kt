@@ -14,9 +14,8 @@ class ForecastAdapter(private val dataList: ArrayList<IItem>) :
     private val ITEM_VIEW_TYPE_IMAGE = 1
 
     // TODO might has better solution
-    fun add(itemPair:Pair<IItem, IItem>) {
-        dataList.add(itemPair.first)
-        dataList.add(itemPair.second)
+    fun add(itemList: List<IItem>) {
+        dataList.addAll(itemList)
         notifyDataSetChanged()
     }
 

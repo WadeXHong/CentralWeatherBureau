@@ -1,4 +1,3 @@
 package com.bardxhong.centralweatherbureau.data
 
-interface IItem {
-}
+interface IItem {}

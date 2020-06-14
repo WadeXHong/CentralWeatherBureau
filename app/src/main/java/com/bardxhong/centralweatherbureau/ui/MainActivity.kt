@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private var hasAlreadyShown: Boolean = false
+    private var isGet36HoursForecastFinish = false
 
     // TODO: This could be extract in a base super class which makes anyone who whats IO coroutine to use
     override val coroutineContext: CoroutineContext
@@ -54,29 +55,32 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         handleFirstOpen()
 
         // TODO refactor to MVP pattern
-        launch {
-            val res = repo.get36HoursForecast(
-                locationNames = listOf(CityEnum.TAIPEI_CITY.cityName)
-            )
+        if (!isGet36HoursForecastFinish) {
+            isGet36HoursForecastFinish = true
+            launch {
+                val res = repo.get36HoursForecast(
+                    locationNames = listOf(CityEnum.TAIPEI_CITY.cityName)
+                )
 
-            res.body()
-                ?.records
-                ?.location
-                ?.firstOrNull()
-                ?.weatherElementList
-                ?.firstOrNull { it.elementName == ElementEnum.MINIMUM_TEMPERATURE.elementName }
-                ?.intervalDataList
-                ?.let { intervalList ->
-                    val list = mutableListOf<IItem<*>>()
-                    intervalList.forEach {
-                        list.add(ForecastItem(it))
-                        list.add(ImageItem(it))
+                res.body()
+                    ?.records
+                    ?.location
+                    ?.firstOrNull()
+                    ?.weatherElementList
+                    ?.firstOrNull { it.elementName == ElementEnum.MINIMUM_TEMPERATURE.elementName }
+                    ?.intervalDataList
+                    ?.let { intervalList ->
+                        val list = mutableListOf<IItem<*>>()
+                        intervalList.forEach {
+                            list.add(ForecastItem(it))
+                            list.add(ImageItem(it))
+                        }
+                        withContext(Dispatchers.Main) {
+                            adapter.add(list)
+                        }
                     }
-                    withContext(Dispatchers.Main) {
-                        adapter.add(list)
-                    }
-                }
-            Log.i(TAG, res.body().toString())
+                Log.i(TAG, res.body().toString())
+            }
         }
     }
 

@@ -24,7 +24,10 @@ class MainActivity : AppCompatActivity() {
 
     private val itemClickListener = object :ForecastAdapter.onItemClickListener {
         override fun onDataViewHolderClick(item: IItem<*>) {
-            // TODO startIntent
+            startActivity(
+                Intent(this@MainActivity, DetailActivity::class.java)
+                    .putExtra(INTENT_EXTRA_KEY_FORECAST_ITEM, item)
+            )
         }
 
         override fun onImageViewHolderClick(item: IItem<*>) {

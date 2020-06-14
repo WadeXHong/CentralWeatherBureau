@@ -3,11 +3,13 @@ package com.bardxhong.centralweatherbureau
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bardxhong.centralweatherbureau.data.ForecastItem
 import com.bardxhong.centralweatherbureau.data.IItem
 import com.bardxhong.centralweatherbureau.data.ImageItem
+import com.bardxhong.centralweatherbureau.repo.FirstOpenSP
 import com.bardxhong.centralweatherbureau.ui.ForecastAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private val TAG = this::class.java.name
 
     private val repo by lazy { ForecastRepo() }
+    private val firstOpenSP by lazy { FirstOpenSP(this) }
     private val recyclerView by lazy { main_activity_recycler_view }
     private val itemClickListener = object : ForecastAdapter.onItemClickListener {
         override fun onDataViewHolderClick(item: IItem<*>) {
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         ForecastAdapter(arrayListOf()).apply { clickListener = itemClickListener }
     }
 
+    private var hasAlreadyShown: Boolean = false
 
     // TODO: This could be extract in a base super class which makes anyone who whats IO coroutine to use
     override val coroutineContext: CoroutineContext
@@ -48,6 +52,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onStart() {
         super.onStart()
+        handleFirstOpen()
+
         // TODO refactor to MVP pattern
         launch {
             val res = repo.get36HoursForecast(
@@ -75,6 +81,17 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                     }
                 }
             Log.i(TAG, res.body().toString())
+        }
+    }
+
+    private fun handleFirstOpen() {
+        if (!firstOpenSP.isFirstOpen) {
+            if (!hasAlreadyShown) {
+                hasAlreadyShown = true
+                Toast.makeText(this, R.string.toast_welcome_back, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            firstOpenSP.isFirstOpen = false
         }
     }
 

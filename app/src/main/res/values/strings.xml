@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CentralWeatherBureau</string>
+    <string name="toast_welcome_back">歡迎回來</string>
 </resources>

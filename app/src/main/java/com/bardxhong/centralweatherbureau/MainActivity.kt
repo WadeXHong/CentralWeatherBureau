@@ -1,5 +1,6 @@
 package com.bardxhong.centralweatherbureau
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,20 @@ class MainActivity : AppCompatActivity() {
     private val repo by lazy { ForecastRepo() }
 
     private val recyclerView by lazy { main_activity_recycler_view }
-    private val adapter by lazy { ForecastAdapter(arrayListOf()) }
+
+    private val itemClickListener = object :ForecastAdapter.onItemClickListener {
+        override fun onDataViewHolderClick(item: IItem<*>) {
+            // TODO startIntent
+        }
+
+        override fun onImageViewHolderClick(item: IItem<*>) {
+
+        }
+    }
+
+    private val adapter by lazy {
+        ForecastAdapter(arrayListOf()).apply { clickListener = itemClickListener }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 ?.firstOrNull()
                 ?.intervalDataList
                 ?.let { intervalList ->
-                    val list = mutableListOf<IItem>()
+                    val list = mutableListOf<IItem<*>>()
                     intervalList.forEach {
                         list.add(ForecastItem(it))
                         list.add(ImageItem(it))

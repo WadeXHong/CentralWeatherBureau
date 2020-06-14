@@ -1,7 +1,10 @@
 package com.bardxhong.centralweatherbureau.data
 
 import com.bardxhong.centralweatherbureau.retrofit.IntervalData
+import kotlinx.android.parcel.Parcelize
 
-data class ForecastItem(val data: IntervalData) : IItem
+@Parcelize
+data class ForecastItem(override val data: IntervalData) : IItem<IntervalData>
 
-data class ImageItem(private val data: IntervalData) : IItem
+@Parcelize
+data class ImageItem(override val data: IntervalData) : IItem<IntervalData>

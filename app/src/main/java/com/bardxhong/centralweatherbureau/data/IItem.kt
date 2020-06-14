@@ -1,3 +1,7 @@
 package com.bardxhong.centralweatherbureau.data
 
-interface IItem {}
+import android.os.Parcelable
+
+interface IItem<T>: Parcelable {
+    val data: T
+}

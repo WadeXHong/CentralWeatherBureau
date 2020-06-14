@@ -8,7 +8,7 @@ import retrofit2.http.Query
 class ForecastRepo {
     suspend fun get36HoursForecast(
         @Query("Authorization") token: String = "CWB-702B7697-51B0-4368-95FA-A9C69C6FCE7D",
-        @Query("limit") limit: Int? = 10,
+        @Query("limit") limit: Int? = 100,
         @Query("offset") offset: Int? = 0,
         @Query("locationName") locationNames: List<String>? = null,
         @Query("elementName") elementNames: List<String>? = null

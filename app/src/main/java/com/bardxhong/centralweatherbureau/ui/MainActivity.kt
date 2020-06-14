@@ -2,7 +2,6 @@ package com.bardxhong.centralweatherbureau.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                             adapter.add(list)
                         }
                     }
-                Log.i(TAG, res.body().toString())
             }
         }
     }

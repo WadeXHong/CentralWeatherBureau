@@ -1,4 +1,4 @@
-package com.bardxhong.centralweatherbureau
+package com.bardxhong.centralweatherbureau.repo
 
 import com.bardxhong.centralweatherbureau.retrofit.Forecast
 import com.bardxhong.centralweatherbureau.retrofit.RetrofitObject

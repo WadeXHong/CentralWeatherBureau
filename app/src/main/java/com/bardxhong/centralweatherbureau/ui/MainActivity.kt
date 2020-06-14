@@ -1,4 +1,4 @@
-package com.bardxhong.centralweatherbureau
+package com.bardxhong.centralweatherbureau.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bardxhong.centralweatherbureau.R
 import com.bardxhong.centralweatherbureau.data.ForecastItem
 import com.bardxhong.centralweatherbureau.data.IItem
 import com.bardxhong.centralweatherbureau.data.ImageItem
 import com.bardxhong.centralweatherbureau.repo.FirstOpenSP
-import com.bardxhong.centralweatherbureau.ui.ForecastAdapter
+import com.bardxhong.centralweatherbureau.repo.ForecastRepo
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -88,7 +89,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         if (!firstOpenSP.isFirstOpen) {
             if (!hasAlreadyShown) {
                 hasAlreadyShown = true
-                Toast.makeText(this, R.string.toast_welcome_back, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    R.string.toast_welcome_back, Toast.LENGTH_SHORT).show()
             }
         } else {
             firstOpenSP.isFirstOpen = false

@@ -1,7 +1,8 @@
-package com.bardxhong.centralweatherbureau
+package com.bardxhong.centralweatherbureau.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bardxhong.centralweatherbureau.R
 import com.bardxhong.centralweatherbureau.data.ForecastItem
 import com.bardxhong.centralweatherbureau.data.IItem
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -29,4 +30,4 @@ class DetailActivity : AppCompatActivity() {
 }
 
 const val INTENT_EXTRA_KEY_FORECAST_ITEM =
-    "com.bardxhong.centralweatherbureau.INTENT_EXTRA_KEY_FORECAST_ITEM"
+    "com.bardxhong.centralweatherbureau.ui.INTENT_EXTRA_KEY_FORECAST_ITEM"

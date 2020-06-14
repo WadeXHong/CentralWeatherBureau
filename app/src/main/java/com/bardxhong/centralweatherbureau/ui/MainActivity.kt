@@ -7,9 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bardxhong.centralweatherbureau.R
-import com.bardxhong.centralweatherbureau.data.ForecastItem
-import com.bardxhong.centralweatherbureau.data.IItem
-import com.bardxhong.centralweatherbureau.data.ImageItem
+import com.bardxhong.centralweatherbureau.data.*
 import com.bardxhong.centralweatherbureau.repo.FirstOpenSP
 import com.bardxhong.centralweatherbureau.repo.ForecastRepo
 import kotlinx.android.synthetic.main.activity_main.*
@@ -58,10 +56,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         // TODO refactor to MVP pattern
         launch {
             val res = repo.get36HoursForecast(
-                // TODO location to Enum
-                locationNames = listOf("臺北市"),
-                // TODO elementName to Enum
-                elementNames = listOf("MinT")
+                locationNames = listOf(CityEnum.TAIPEI_CITY.cityName)
             )
 
             res.body()
@@ -69,7 +64,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 ?.location
                 ?.firstOrNull()
                 ?.weatherElementList
-                ?.firstOrNull()
+                ?.firstOrNull { it.elementName == ElementEnum.MINIMUM_TEMPERATURE.elementName }
                 ?.intervalDataList
                 ?.let { intervalList ->
                     val list = mutableListOf<IItem<*>>()
@@ -89,8 +84,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         if (!firstOpenSP.isFirstOpen) {
             if (!hasAlreadyShown) {
                 hasAlreadyShown = true
-                Toast.makeText(this,
-                    R.string.toast_welcome_back, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    R.string.toast_welcome_back, Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             firstOpenSP.isFirstOpen = false

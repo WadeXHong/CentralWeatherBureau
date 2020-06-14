@@ -10,19 +10,15 @@ import com.bardxhong.centralweatherbureau.data.IItem
 import com.bardxhong.centralweatherbureau.data.ImageItem
 import com.bardxhong.centralweatherbureau.ui.ForecastAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
     private val TAG = this::class.java.name
 
     private val repo by lazy { ForecastRepo() }
-
     private val recyclerView by lazy { main_activity_recycler_view }
-
-    private val itemClickListener = object :ForecastAdapter.onItemClickListener {
+    private val itemClickListener = object : ForecastAdapter.onItemClickListener {
         override fun onDataViewHolderClick(item: IItem<*>) {
             startActivity(
                 Intent(this@MainActivity, DetailActivity::class.java)
@@ -34,10 +30,14 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
     private val adapter by lazy {
         ForecastAdapter(arrayListOf()).apply { clickListener = itemClickListener }
     }
+
+
+    // TODO: This could be extract in a base super class which makes anyone who whats IO coroutine to use
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // TODO refactor to MVP pattern
-        CoroutineScope(Dispatchers.IO).launch {
+        launch {
             val res = repo.get36HoursForecast(
                 // TODO location to Enum
                 locationNames = listOf("臺北市"),
@@ -76,5 +76,10 @@ class MainActivity : AppCompatActivity() {
                 }
             Log.i(TAG, res.body().toString())
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        coroutineContext.cancel()
     }
 }

@@ -6,4 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
+    <FrameLayout
+        android:id="@+id/activity_detail_left_top_area"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/activity_detail_central_area"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@id/activity_detail_right_bottom_area"
+        app:layout_constraintEnd_toStartOf="@id/activity_detail_right_bottom_area"
+        app:layout_constraintStart_toEndOf="@id/activity_detail_left_top_area"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_left_top_area" />
+
+    <FrameLayout
+        android:id="@+id/activity_detail_right_bottom_area"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_detail_vertical_center_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/activity_detail_central_area"
+        app:layout_constraintStart_toStartOf="@id/activity_detail_central_area"
+        app:layout_constraintTop_toTopOf="@id/activity_detail_vertical_center_guideline">
+
+        <TextView
+            android:id="@+id/activity_detail_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            tools:text="starttime" />
+
+        <TextView
+            android:id="@+id/activity_detail_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            tools:text="endtime" />
+
+        <TextView
+            android:id="@+id/activity_detail_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="27C" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
